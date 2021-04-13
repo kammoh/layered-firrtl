@@ -8,17 +8,17 @@ resolvers ++= Seq(
 )
 
 val defaultVersions = Map(
-  "chisel3" -> "3.4.3"
+  "chisel3" -> "3.5-SNAPSHOT"
 )
 
 organization := "org.easysoc"
 organizationName := "EasySoC"
 organizationHomepage := Some(url("https://github.com/easysoc/"))
-version := "1.0.9"
+version := "1.1-SNAPSHOT"
 autoAPIMappings := true
 // should match chisel's dependencies https://search.maven.org/artifact/edu.berkeley.cs/chisel3-core_2.12
-scalaVersion := "2.12.12"
-crossScalaVersions := Seq("2.13.4", "2.12.13")
+scalaVersion := "2.12.13"
+crossScalaVersions := Seq("2.13.5", "2.12.13")
 scalacOptions := Seq("-deprecation", "-feature") ++ scalacOptionsVersion(scalaVersion.value)
 
 //crossPaths := false
@@ -40,8 +40,8 @@ def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
     //  switch to support our anonymous Bundle definitions:
     //  https://github.com/scala/bug/issues/10047
     CrossVersion.partialVersion(scalaVersion) match {
-      case Some((2, scalaMajor: Long)) if scalaMajor < 12 => Seq()
-      case _ => Seq("-Xsource:2.11")
+      case Some((2, scalaMajor: Long)) if scalaMajor == 12 => Seq("-Xsource:2.11")
+      case _ => Seq()
     }
   }
 }
@@ -94,8 +94,8 @@ libraryDependencies ++= Seq("chisel3").map { dep: String =>
 }
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.1.3" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.14.3" % "test"
+  "org.scalatest" %% "scalatest" % "3.1.4" % "test",
+  "org.scalacheck" %% "scalacheck" % "1.15.3" % "test"
 )
 
 scalacOptions ++= scalacOptionsVersion(scalaVersion.value)
