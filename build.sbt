@@ -46,20 +46,6 @@ def scalacOptionsVersion(scalaVersion: String): Seq[String] = {
   }
 }
 
-def javacOptionsVersion(scalaVersion: String): Seq[String] = {
-  Seq() ++ {
-    // Scala 2.12 requires Java 8. We continue to generate
-    //  Java 7 compatible code for Scala 2.11
-    //  for compatibility with old clients.
-    CrossVersion.partialVersion(scalaVersion) match {
-      case Some((2, scalaMajor: Long)) if scalaMajor < 12 =>
-        Seq("-source", "1.7", "-target", "1.7")
-      case _ =>
-        Seq("-source", "1.8", "-target", "1.8")
-    }
-  }
-}
-
 publishMavenStyle := true
 publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
@@ -99,8 +85,6 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions ++= scalacOptionsVersion(scalaVersion.value)
-
-javacOptions ++= javacOptionsVersion(scalaVersion.value)
 
 // Assembly
 
